@@ -63,25 +63,22 @@ let currentIndex = 1;
 let previousIndex = currentIndex;
 
 function moveImage(num) {
-  previousIndex = currentIndex - 1;
+  previousIndex = (currentIndex >= 1) ? currentIndex - 1 : 4;
   showImage((currentIndex += num));
 }
 
 function showImage(num) {
   const images = document.querySelectorAll(".carousel img");
-  console.log(images);
 
   if (num > images.length) {
     currentIndex = 1;
   }
-  if (num < 0) {
+  if (num < 1) {
     currentIndex = images.length;
   }
 
-  images[previousIndex].style.display = 'none';
   images[currentIndex - 1].style.display = 'block';
-  console.log(images[currentIndex - 1]);
-  console.log(previousIndex);
+  images[previousIndex].style.display = '';
 }
 
 document.querySelector(".carousel-container").appendChild(Carousel());
