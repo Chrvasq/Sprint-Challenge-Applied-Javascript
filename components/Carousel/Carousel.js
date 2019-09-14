@@ -17,3 +17,72 @@
     <div class="right-button"> > </div>
   </div>
 */
+
+function Carousel() {
+  // create carousel images list
+  const carouselImages = ["mountains", "computer", "trees", "turntable"];
+
+  // create elements
+  const carousel = document.createElement("div");
+  const leftButton = document.createElement("div");
+  const images = carouselImages.map(() => {
+    return document.createElement("img");
+  });
+  const rightButton = document.createElement("div");
+
+  // add classes to elements
+  carousel.classList.add("carousel");
+  leftButton.classList.add("left-button");
+  rightButton.classList.add("right-button");
+
+  // add image src to each image element
+  carouselImages.forEach((image, index) => {
+    images[index].src = `./assets/carousel/${image}.jpeg`;
+  });
+
+  // build component
+  carousel.appendChild(leftButton);
+  images.forEach(image => {
+    carousel.appendChild(image);
+  });
+  carousel.appendChild(rightButton);
+
+  // add eventListener on click for buttons
+  leftButton.addEventListener("click", () => {
+    moveImage(-1);
+  });
+
+  rightButton.addEventListener("click", () => {
+    moveImage(1);
+  });
+
+  return carousel;
+}
+
+let currentIndex = 1;
+let previousIndex = currentIndex;
+
+function moveImage(num) {
+  previousIndex = currentIndex - 1;
+  showImage((currentIndex += num));
+}
+
+function showImage(num) {
+  const images = document.querySelectorAll(".carousel img");
+  console.log(images);
+
+  if (num > images.length) {
+    currentIndex = 1;
+  }
+  if (num < 0) {
+    currentIndex = images.length;
+  }
+
+  images[previousIndex].style.display = 'none';
+  images[currentIndex - 1].style.display = 'block';
+  console.log(images[currentIndex - 1]);
+  console.log(previousIndex);
+}
+
+document.querySelector(".carousel-container").appendChild(Carousel());
+showImage(currentIndex);
